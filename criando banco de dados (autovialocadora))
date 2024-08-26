@@ -1,0 +1,50 @@
+/*CRIANDO TABELAS*/
+CREATE TABLE Marcas (
+id Int auto_increment PRIMARY KEY,
+nome VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE Modelos (
+id INT auto_increment PRIMARY KEY,
+nome VARCHAR(50) NOT NULL,
+id_marca INT,
+FOREIGN KEY (id_marca) REFERENCES Marcas(id)
+);
+use autovialocadora
+CREATE TABLE veiculos (
+id INT auto_increment primary key,
+placa VARCHAR(10) NOT NULL UNIQUE,
+ano INT NOT NULL,
+cor VARCHAR(20),
+id_modelo int,
+status enum('Disponivel', 'locado', 'Em manutenção') de 'disponivel',
+foreign key (id_modelo) references Modelos(id)
+);
+create table Clientes (
+id int auto_increment primary key,
+nome varchar(100) not null,
+cpf varchar(14) not null unique,
+telefone varchar(15),
+endereço varchar(255)
+);
+
+create table Contratos (
+id int auto_increment primary key,
+id_cliente int,
+id_veiculo int,
+data_inicio date not null,
+data_fim date,
+valor_total decimal(10, 2),
+foreign key (id_cliente) references Clientes(id),
+foreign key (id_veiculo) references veiculos(id)
+);
+
+ create table Pagamentos (
+id int auto_increment primary key,
+id_contrato int,
+data_pagamento date not null,
+valor decimal(10, 2) not null,
+metodo enum('dinheiro', ' Cartão de Credito', 'Transferencia') not null,
+foreign key (id_contrato) references contratos(id)
+);   
+    
